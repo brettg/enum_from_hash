@@ -1,0 +1,39 @@
+= enum_from_hash
+A Rails plugin to use a hash of symbol keys to integers to make an integer db column behave 
+like a enum in ActiveRecord.
+Given the hash it adds:
+  - a constant for the hash
+  - contants for each member of the hash
+  - an instance setter for the field that accepts either an integer or one
+    of the symbol keys from the hash
+  - a _name method that returns the string name
+  - a instance predicate for each symbol in the hash
+  - validation that the value of the column one of the hashes values
+
+== For example 
+If the foo table has an integer column bar:
+
+ class Foo < ActiveRecord::Base
+   ...
+   enum_from_hash :bar, {:argle => 1, :bargle => 2}
+   ...
+ end
+
+The following would work:
+
+ >> Foo::BAR
+ => {:argle => 1, :bargle => 2}
+ >> Foo::ARGLE
+ => 1
+ >> f = Foo.new
+ >> f.bar = :argle
+ >> f.bar
+ >= 1
+ >> f.argle?
+ >= true
+ >> f.bargle?
+ >= false
+ >> f.bar_name
+ >= 'argle'
+
+It also works if the column in the db ends in _id, adding getter with the name w/o _id.
