@@ -71,6 +71,11 @@ context 'An ActiveRecord module using enum_from_hash with field name correspondi
     @inst.should.not.be.valid
     @inst.errors.on(:material).should.not.be.nil
   end
+  
+  specify 'should allow blank for validation' do
+    @inst.material = nil
+    @inst.should.be.valid
+  end
 end
 
 context 'An ActiveRecord module using enum_from_hash with field name corresponding to column + _id' do

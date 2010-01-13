@@ -18,7 +18,7 @@ module EnumFromHash
       return
     end
       
-    validates_inclusion_of col, :in => hash.values
+    validates_inclusion_of col, :in => hash.values, :allow_blank => true
     
     class_eval do
       define_method("#{field}=") do |new_val|
